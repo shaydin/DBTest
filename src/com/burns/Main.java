@@ -9,7 +9,7 @@ import java.sql.*;
 public class Main {
 
     //?s are placeholders for SQL
-    public static final String SQL = "SELECT tourId, tourName, price FROM tours WHERE price <= ?";
+    public static final String SQL = "{call GetToursByPrice(?)}";
 
     public static void main(String[] args) throws SQLException {
 
@@ -23,8 +23,9 @@ public class Main {
         ResultSet rs = null;
         try (
                 Connection conn = DBUtil.getConnection(DBType.MYSQL);
-                PreparedStatement stmt = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                CallableStatement stmt = conn.prepareCall(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ) {
+
             //Make sure to use the right data type here
             stmt.setDouble(1, maxPrice);
             rs = stmt.executeQuery();
