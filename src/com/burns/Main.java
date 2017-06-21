@@ -9,7 +9,7 @@ import java.sql.*;
 public class Main {
 
     //?s are placeholders for SQL
-    public static final String SQL = "{call GetToursByPrice(?)}";
+    public static final String SQL = "{call GetToursWithCountByPrice(?, ?)}";
 
     public static void main(String[] args) throws SQLException {
 
@@ -28,8 +28,12 @@ public class Main {
 
             //Make sure to use the right data type here
             stmt.setDouble(1, maxPrice);
+            stmt.registerOutParameter("total", Types.INTEGER);
             rs = stmt.executeQuery();
-            Tours.displayData(rs);
+
+            int nRows = stmt.getInt("total");
+
+            Tours.displayData(rs, nRows);
         } catch (SQLException e) {
             DBUtil.processException(e);
         }finally {

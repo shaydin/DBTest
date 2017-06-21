@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 
 public class Tours {
-    public static void displayData(ResultSet rs) throws SQLException {
+    public static void displayData(ResultSet rs, int nRows) throws SQLException {
 
-        rs.last();
-        int nRows = rs.getRow();
+        // rs.last();
+        // int nRows = rs.getRow();
         if (nRows == 0){
             System.out.println("No tours found.");
         } else {
