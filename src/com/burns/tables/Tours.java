@@ -1,11 +1,14 @@
 package com.burns.tables;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 
 public class Tours {
     public static void displayData(ResultSet rs, int nRows) throws SQLException {
+        while(rs.next()) {
+            StringBuffer buffer = new StringBuffer();
 
         // rs.last();
         // int nRows = rs.getRow();
@@ -15,18 +18,14 @@ public class Tours {
             System.out.println("Number of tours: " + nRows);
             rs.beforeFirst();
 
-            while(rs.next()) {
-                StringBuffer buffer = new StringBuffer();
-                buffer.append("Tour " + rs.getInt("tourId") + ": ");
-                buffer.append(rs.getString("tourName"));
+            buffer.append("Tour " + tourId + ": ");
+            buffer.append(tourName);
 
-                double price = rs.getDouble("price");
-                NumberFormat nf = NumberFormat.getCurrencyInstance();
-                String formattedPrice = nf.format(price);
-                buffer.append(" (" + formattedPrice + ")");
+            NumberFormat nf = NumberFormat.getCurrencyInstance();
+            String formattedPrice = nf.format(price);
+            buffer.append(" (" + formattedPrice + ")");
 
-                System.out.println(buffer.toString());
-            }
+            System.out.println(buffer.toString());
         }
     }
 }
